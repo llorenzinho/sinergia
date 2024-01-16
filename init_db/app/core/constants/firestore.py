@@ -1,0 +1,2 @@
+class FirestoreCollections:
+    cities = "cities"

@@ -6,19 +6,18 @@ class CityModel extends CityEntity {
       required super.provinceId,
       required super.provinceName,
       required super.fileIds,
-      required super.regionId,
+      required super.regionCode,
       required super.regionName});
 
   factory CityModel.fromJson(Map<String, dynamic> json) {
+    var fileIds = json['fileIds'] ?? [];
     return CityModel(
         name: json['name'] as String,
         provinceId: json['provinceId'] ?? '',
         provinceName: json['provinceName'] as String,
-        regionId: json['regionId'] as String,
+        regionCode: json['regionCode'] as String,
         regionName: json['regionName'] as String,
-        fileIds: (json['fileIds'] as List<dynamic>)
-            .map((e) => e.toString())
-            .toList());
+        fileIds: (fileIds as List<dynamic>).map((e) => e.toString()).toList());
   }
 
   Map<String, dynamic> toJson() {
@@ -26,7 +25,7 @@ class CityModel extends CityEntity {
       'name': name,
       'provinceId': provinceId,
       'provinceName': provinceName,
-      'regionId': regionId,
+      'regionCode': regionCode,
       'regionName': regionName,
       'fileIds': fileIds,
     };

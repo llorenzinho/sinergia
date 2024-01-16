@@ -25,7 +25,7 @@ class CityRepositoryImpl extends CityRepository {
 
   @override
   Future<List<CityModel>> getByRegionID(String regionID) {
-    return ds.getByRegionId(regionID);
+    return ds.getByRegionCode(regionID);
   }
 
   @override
@@ -45,7 +45,7 @@ class CityRepositoryImpl extends CityRepository {
       String? name,
       String? id,
       String? regionName,
-      String? regionId}) {
+      String? regionCode}) {
     // TODO: implement getBy
     throw UnimplementedError();
   }

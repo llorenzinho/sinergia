@@ -38,9 +38,9 @@ class CityDatasource {
     });
   }
 
-  Future<List<CityModel>> getByRegionId(String regionId) async {
-    return _cities.where('regionId', isEqualTo: regionId).get().then((value) =>
-        value.docs
+  Future<List<CityModel>> getByRegionCode(String regionCode) async {
+    return _cities.where('regionCode', isEqualTo: regionCode).get().then(
+        (value) => value.docs
             .map((e) => CityModel.fromJson(e.data()! as Map<String, dynamic>))
             .toList());
   }

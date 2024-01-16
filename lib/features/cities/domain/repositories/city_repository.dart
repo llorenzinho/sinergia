@@ -7,7 +7,7 @@ abstract class CityRepository {
       String? name,
       String? id,
       String? regionName,
-      String? regionId});
+      String? regionCode});
   Future<List<CityEntity>> getAll();
   Future<List<CityEntity>> getByRegionID(String regionID);
   Future<List<CityEntity>> getByRegionName(String regionName);

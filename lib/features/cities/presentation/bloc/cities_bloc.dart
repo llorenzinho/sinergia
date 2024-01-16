@@ -8,9 +8,9 @@ part 'cities_event.dart';
 part 'cities_state.dart';
 
 class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
-  final GetCityByRegionUC getByRegionIdUC;
+  final GetCityByRegionUC getByRegionCodeUC;
 
-  CitiesBloc(this.getByRegionIdUC) : super(CitiesInitial()) {
+  CitiesBloc(this.getByRegionCodeUC) : super(CitiesInitial()) {
     on<CitiesRequested>(_getCities);
   }
 
@@ -18,7 +18,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
       CitiesRequested event, Emitter<CitiesState> emit) async {
     emit(CitiesLoading());
     try {
-      final List<CityEntity> cities = await getByRegionIdUC(event.regionID);
+      final List<CityEntity> cities = await getByRegionCodeUC(event.regionID);
       emit(CitiesLoaded(cities: cities));
     } catch (e) {
       emit(CitiesError(message: e.toString()));
