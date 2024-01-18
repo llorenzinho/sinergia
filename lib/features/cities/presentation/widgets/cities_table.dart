@@ -37,42 +37,51 @@ class _CityTableState extends State<CityTable> {
 
   @override
   Widget build(BuildContext context) {
-    final tableDataSource = CitiesTableDataSource(cities: _filteredCities);
+    final tableDataSource =
+        CitiesTableDataSource(cities: _filteredCities, buildctx: context);
     return SingleChildScrollView(
       child: PaginatedDataTable(
-          columns: _getColums,
-          source: tableDataSource,
-          rowsPerPage: 10,
-          header: _getHeader()),
+        columns: _getColums,
+        key: UniqueKey(),
+        source: tableDataSource,
+        rowsPerPage: 10,
+        header: const Text("Città"),
+        actions: _getActions,
+      ),
     );
   }
 
-  Row _getHeader() {
-    return Row(
-      children: [
-        const Text("Città"),
-        const Spacer(),
-        if (widget.withSearch ?? true)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: TextField(
-                controller: _searchController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  labelText: 'Cerca',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25.0),
-                    ),
-                  ),
+  List<Widget> get _getActions {
+    return <Widget>[
+      SizedBox(
+        width: 200,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: TextField(
+            controller: _searchController,
+            autofocus: true,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              labelText: 'Cerca',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25.0),
                 ),
-                onChanged: _filter,
               ),
             ),
+            onChanged: _filter,
           ),
-      ],
-    );
+        ),
+      ),
+      IconButton(
+          onPressed: () {
+            setState(() {
+              _filteredCities = widget.cities;
+              _searchController.clear();
+            });
+          },
+          icon: const Icon(Icons.clear)),
+    ];
   }
 
   List<DataColumn> get _getColums {
@@ -112,7 +121,7 @@ class _CityTableState extends State<CityTable> {
             });
           }),
       const DataColumn(label: Text('Regione')),
-      const DataColumn(label: Text('Files')),
+      const DataColumn(label: Text('Files'), numeric: true),
     ];
   }
 }
