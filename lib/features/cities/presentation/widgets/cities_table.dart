@@ -40,60 +40,68 @@ class _CityTableState extends State<CityTable> {
     final tableDataSource = CitiesTableDataSource(cities: _filteredCities);
     return SingleChildScrollView(
       child: PaginatedDataTable(
-          columns: [
-            DataColumn(
-                label: const Text("Nome"),
-                onSort: (columnIndex, ascending) {
-                  setState(() {
-                    _filteredCities.sort((a, b) => a.name.compareTo(b.name));
-                    if (_nameAscending) {
-                      _filteredCities = _filteredCities.reversed.toList();
-                    }
-                    _nameAscending = !_nameAscending;
-                  });
-                }),
-            DataColumn(
-                label: const Text('Provincia'),
-                onSort: (columnIndex, ascending) {
-                  setState(() {
-                    _filteredCities.sort(
-                        (a, b) => a.provinceName.compareTo(b.provinceName));
-                    if (_provinceAscending) {
-                      _filteredCities = _filteredCities.reversed.toList();
-                    }
-                    _provinceAscending = !_provinceAscending;
-                  });
-                }),
-            const DataColumn(label: Text('Regione')),
-            const DataColumn(label: Text('Files')),
-          ],
+          columns: _getColums,
           source: tableDataSource,
           rowsPerPage: 10,
-          header: Row(
-            children: [
-              const Text("Città"),
-              const Spacer(),
-              if (widget.withSearch ?? true)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        labelText: 'Cerca',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(25.0),
-                          ),
-                        ),
-                      ),
-                      onChanged: _filter,
+          header: _getHeader()),
+    );
+  }
+
+  Row _getHeader() {
+    return Row(
+      children: [
+        const Text("Città"),
+        const Spacer(),
+        if (widget.withSearch ?? true)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  labelText: 'Cerca',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25.0),
                     ),
                   ),
                 ),
-            ],
-          )),
+                onChanged: _filter,
+              ),
+            ),
+          ),
+      ],
     );
+  }
+
+  List<DataColumn> get _getColums {
+    return [
+      DataColumn(
+          label: const Text('Nome'),
+          onSort: (columnIndex, ascending) {
+            setState(() {
+              _filteredCities.sort((a, b) => a.name.compareTo(b.name));
+              if (_nameAscending) {
+                _filteredCities = _filteredCities.reversed.toList();
+              }
+              _nameAscending = !_nameAscending;
+            });
+          }),
+      DataColumn(
+          label: const Text('Provincia'),
+          onSort: (columnIndex, ascending) {
+            setState(() {
+              _filteredCities
+                  .sort((a, b) => a.provinceName.compareTo(b.provinceName));
+              if (_provinceAscending) {
+                _filteredCities = _filteredCities.reversed.toList();
+              }
+              _provinceAscending = !_provinceAscending;
+            });
+          }),
+      const DataColumn(label: Text('Regione')),
+      const DataColumn(label: Text('Files')),
+    ];
   }
 }
