@@ -15,8 +15,8 @@ class CityTable extends StatefulWidget {
 class _CityTableState extends State<CityTable> {
   final TextEditingController _searchController = TextEditingController();
   late List<CityEntity> _filteredCities;
-  bool _nameAscending = false;
-  bool _provinceAscending = false;
+  bool _nameAscending = true;
+  bool _provinceAscending = true;
 
   @override
   void initState() {
@@ -78,7 +78,18 @@ class _CityTableState extends State<CityTable> {
   List<DataColumn> get _getColums {
     return [
       DataColumn(
-          label: const Text('Nome'),
+          label: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                _nameAscending
+                    ? Icons.arrow_upward_rounded
+                    : Icons.arrow_downward_rounded,
+                size: 14,
+              ),
+              const Text('Nome')
+            ],
+          ),
           onSort: (columnIndex, ascending) {
             setState(() {
               _filteredCities.sort((a, b) => a.name.compareTo(b.name));
