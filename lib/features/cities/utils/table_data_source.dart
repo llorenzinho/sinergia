@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:sinergia/features/cities/domain/entities/city_entity.dart';
 import 'package:sinergia/features/documents/presentation/pages/test_page.dart';
