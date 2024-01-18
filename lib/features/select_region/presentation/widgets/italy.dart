@@ -43,9 +43,17 @@ class _ItalyMapState extends State<ItalyMap> {
 
   void _selectRegion(String id, String name, TapUpDetails tapDetails) {
     if (!id.startsWith("IT")) return;
+    if (_alreadySelected(name)) return;
     BlocProvider.of<SelectRegionCubit>(context).selectRegion(name);
     BlocProvider.of<CitiesBloc>(context).add(CitiesRequested(regionID: id));
     _setColor(id: id);
+  }
+
+  bool _alreadySelected(String region) {
+    var state = BlocProvider.of<SelectRegionCubit>(context).state;
+    return (state is SelectRegion &&
+        state.selectedRegion.isNotEmpty &&
+        state.selectedRegion == region);
   }
 
   void _setColor({String? id}) {
