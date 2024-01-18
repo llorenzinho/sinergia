@@ -120,7 +120,7 @@ class _CityTableState extends State<CityTable> {
               _provinceAscending = !_provinceAscending;
             });
           }),
-      const DataColumn(label: Text('Regione')),
+      const DataColumn(label: Text('CAP')),
       const DataColumn(label: Text('Files'), numeric: true),
     ];
   }

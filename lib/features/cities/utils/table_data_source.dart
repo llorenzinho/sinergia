@@ -18,7 +18,7 @@ class CitiesTableDataSource extends DataTableSource {
             MaterialPageRoute(builder: (context) => Test(city: city.name))),
       ), // name
       DataCell(Text(city.provinceName)), // province
-      DataCell(Text(city.regionName)), // region
+      DataCell(Text(city.cap)), // cap
       DataCell(Text(city.fileIds.length.toString())) // files count
     ]);
   }
