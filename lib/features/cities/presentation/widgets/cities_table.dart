@@ -29,8 +29,8 @@ class _CityTableState extends State<CityTable> {
       _filteredCities = widget.cities
           .where((city) =>
               city.name.toLowerCase().contains(text.toLowerCase()) ||
-              // city.provinceName.toLowerCase().contains(text.toLowerCase()) ||
-              city.provinceId.toUpperCase().contains(text.toUpperCase()))
+              city.cap.contains(text) ||
+              city.provinceShortName.toUpperCase().contains(text.toUpperCase()))
           .toList();
     });
   }
